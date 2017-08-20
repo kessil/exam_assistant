@@ -1,6 +1,6 @@
 <template>
   <div>
-     <!-- <h2>技术支持:</h2> -->
+      <div style="height: 2rem;"></div>
     <mu-flexbox orient="vertical" class="flexbox-demo">
       <mu-flexbox-item v-for="img in linkerImg" :key="img.name" ><a :href="img.name" target="_blank"><img :src="img.src" :alt="img.name" :title="img.name" width="100px" height="100px"></a></mu-flexbox-item>
     </mu-flexbox>
@@ -24,7 +24,6 @@ export default {
 <style scoped>
   .flexbox-demo {
     text-align: center;
-     margin-top: 2rem;
   }
   h2 {
     text-align: left;

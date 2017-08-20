@@ -2,11 +2,11 @@
   <div>
     <mu-flexbox class="mt8" orient="vertical">
       <mu-flexbox-item class="flex-demo">
-        <mu-text-field v-show="flag" hintText="题干精确查找，谨慎输入"  class="search-field" v-model="keywords"/>
+        <mu-text-field v-show="flag" hintText="精确匹配模式，请谨慎输入"  class="search-field" v-model="keywords"/>
       </mu-flexbox-item>
       <mu-flexbox-item class="flex-demo">
-        <mu-float-button v-if="flag" class="mtRight" icon="add" @click="searching"/>
-        <mu-float-button v-else class="mtRight" @click="clean">{{results.length}}</mu-float-button>
+        <mu-float-button v-if="flag" class="mtRight" icon="add" @click="searching" secondary/>
+        <mu-float-button v-else class="mtRight" @click="clean" secondary>{{results.length}}</mu-float-button>
       </mu-flexbox-item>
     </mu-flexbox>
     <question v-for="item of results" :question="item" :key="item.id" mode="recite"></question>

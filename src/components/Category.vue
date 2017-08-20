@@ -11,6 +11,7 @@
       <question v-for="item of currents" :question="item" mode="recite" :key="item.id"><mu-divider/></question>
       <div v-if="currents.length < afterSort.length"><a @click="loadMore">点我加载更多</a></div>
       <div v-else>已无更多</div>
+      <mu-back-top/>
     </div>
     <div v-else>
       <h2>你看不到我</h2>

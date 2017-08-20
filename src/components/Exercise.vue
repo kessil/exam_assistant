@@ -3,7 +3,7 @@
     <mu-appbar :title="desc" class="content">
       <!-- <mu-flat-button icon="star" mini @click="starQuestion" slot="right" secondary/> -->
       <mu-chip backgroundColor="white" slot="right">
-        <mu-avatar :size="32" icon="face" backgroundColor="#FF4081"/>
+        <mu-avatar :size="32" icon="face" backgroundColor="#a4c639" />
         <span style="color: springgreen;">{{corrects}}</span>
         -
         <span style="color: red;">{{wrongs}}</span>
@@ -11,16 +11,19 @@
         <span style="color: #878787;">{{total - corrects - wrongs}}</span>
       </mu-chip>
     </mu-appbar>
-      <!-- <div style="height: 2.5rem;"></div> -->
-      <div v-if="current">
-        <question :question="current" mode="exercise" @childClicked="checkResult"></question>
-      </div>
-      <div v-else>
-        <h2>你看不到我</h2>
-        <p>抱歉，没有获取到数据</p>
-      </div>
-      <mu-toast v-if="toast" :message="msg" style="text-align: center;" @close="hideToast"/>
-      <mu-float-button v-if="currpos < total-1" icon="chevron_right" class="mtRight" @click="nextQuestion"/>
+    <!-- <div style="height: 2.5rem;"></div> -->
+    <div v-if="current">
+      <question :question="current" mode="exercise" @childClicked="checkResult"></question>
+    </div>
+    <div v-else>
+      <h2>你看不到我</h2>
+      <p>抱歉，没有获取到数据</p>
+    </div>
+    <mu-toast v-if="toast" :message="msg" style="text-align: center;" @close="hideToast" />
+    <div class="fixed-right"><ul>
+      <div><mu-float-button v-if="currpos > 0" mini secondary icon="chevron_left" class="mt-left" @click="prevQuestion" /></div>
+      <div><mu-float-button v-if="currpos < total-1" icon="chevron_right" class="mt-right" @click="nextQuestion" /></div>
+    </ul></div>
   </div>
 </template>
 <script>
@@ -43,33 +46,33 @@ export default {
     Question
   },
   computed: {
-    desc: function() {
-      return `${this.currpos+1} / ${this.total}`;
+    desc: function () {
+      return `${this.currpos + 1} / ${this.total}`;
     }
   },
   created() {
-    this.questions = JSON.parse(this.userData).sort(function(){
+    this.questions = JSON.parse(this.userData).sort(function () {
       return Math.random() - 0.5;
     });
     this.total = this.questions.length;
     this.current = this.questions[this.currpos];
   },
   methods: {
-    nextQuestion: function() {
-      if(this.currpos < this.total) {
+    nextQuestion: function () {
+      if (this.currpos < this.total) {
         this.currpos++;
         this.current = this.questions[this.currpos];
       }
     },
-    prevQuestion: function() {
-      if(this.currpos > 0) {
+    prevQuestion: function () {
+      if (this.currpos > 0) {
         this.currpos--;
         this.current = this.questions[this.currpos];
       }
     },
-    starQuestion: function() {
+    starQuestion: function () {
       var index = this.current.id;
-      if(!this.myStars.some(function(s) {
+      if (!this.myStars.some(function (s) {
         return s.id === index;
       })) {
         this.myStars.push(this.current);
@@ -82,14 +85,14 @@ export default {
       if (this.toastTimer) clearTimeout(this.toastTimer)
       this.toastTimer = setTimeout(() => { this.toast = false }, 1000)
     },
-    hideToast () {
+    hideToast() {
       this.toast = false
       if (this.toastTimer) clearTimeout(this.toastTimer)
     },
-    checkResult: function(ans) {
+    checkResult: function (ans) {
       console.log(ans, "in Exercise.vue");
       this.current.result = ans;
-      if(this.current.result === this.current.answer) {
+      if (this.current.result === this.current.answer) {
         this.corrects++;
         setTimeout(this.nextQuestion, 2000);
       } else {
@@ -100,21 +103,39 @@ export default {
 }
 </script>
 <style scoped>
-  .exercise-content {
-    text-align: left;
-  }
-  /* .content {
+.exercise-content {
+  text-align: left;
+}
+
+
+/* .content {
     width: 100%;
     position: fixed;
     top: 0;
     left: 0;
   } */
-  .mtRight {
-    position: fixed;
-    bottom: 3.5rem;
-    opacity: 0.5;
-    text-align: right;
-    right: 0.5rem;
-  }
+
+.fixed-right {
+  position: fixed;
+  display: flex;
+  bottom: 3.5rem;
+  right: 0.5rem;
+  text-align: right;
+  opacity: 0.5;
+}
+
+/* .mt-left {
+  position: fixed;
+  bottom: 4.5rem;
+  opacity: 0.5;
+  right: 0.5rem;
+}
+
+.mt-right {
+  position: fixed;
+  bottom: 3.5rem;
+  opacity: 0.5;
+  right: 0.5rem;
+} */
 </style>
 

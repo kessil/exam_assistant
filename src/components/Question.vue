@@ -4,7 +4,33 @@
       <span class="question-type" v-text="question.type"></span>
       {{question.content}}
     </div>
-    <mu-list v-if="mode === 'recite'" class="question-list">
+    <div v-if="mode === 'recite'" class="question-list">
+      <div v-show="question.A">
+        <i v-if="question.answer === 'A'" class="fa fa-check-square-o" key="correctA"></i>
+        <i v-else class="fa fa-square-o" key="defaultA"></i>
+        <span> A. </span>
+        <span v-text="question.A"></span>
+      </div>
+      <div v-show="question.B">
+        <i v-if="question.answer === 'B'" class="fa fa-check-square-o" key="correctB"></i>
+        <i v-else class="fa fa-square-o" key="defaultB"></i>
+        <span> B. </span>
+        <span v-text="question.B"></span>
+      </div>
+      <div v-show="question.C">
+        <i v-if="question.answer === 'C'" class="fa fa-check-square-o" key="correctC"></i>
+        <i v-else class="fa fa-square-o" key="defaultC"></i>
+        <span> C. </span>
+        <span v-text="question.C"></span>
+      </div>
+      <div v-show="question.D">
+        <i v-if="question.answer === 'D'" class="fa fa-check-square-o" key="correctD"></i>
+        <i v-else class="fa fa-square-o" key="defaultD"></i>
+        <span> D. </span>
+        <span v-text="question.D"></span>
+      </div>
+    </div>
+    <!-- <mu-list v-if="mode === 'recite'" class="question-list">
       <mu-list-item v-show="question.A">
         <div>
           <i v-if="question.answer === 'A'" class="fa fa-check-square-o" key="correctA"></i>
@@ -37,7 +63,7 @@
           <span v-text="question.D"></span>
         </div>
       </mu-list-item>
-    </mu-list>
+    </mu-list> -->
     <mu-list v-else-if="mode === 'exercise'" class="question-list">
       <mu-list-item v-show="question.A">
         <a href="javascript:;" @click="checkAnswer('A')">
@@ -113,9 +139,11 @@ export default {
   line-height: 1.5rem;
   font-size: 1.0rem;
 }
+
 .practice-content {
   text-align: left;
 }
+
 .question-type {
   width: 10%;
   left: 0;
@@ -123,14 +151,16 @@ export default {
   margin-right: 0.5rem;
   background-color: #FF4081;
 }
-.container{
+
+.container {
   display: flex;
   flex-wrap: wrap;
 }
+
 .question-list div,
 .question-list a {
   color: black;
-  line-height: 1.2rem;
+  line-height: 1.5rem;
   font-size: 0.9rem;
 }
 
