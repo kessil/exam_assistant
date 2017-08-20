@@ -14,7 +14,7 @@ export default {
       linkerImg: [
         { name: "https://cn.vuejs.org/", src: require('../assets/logo_vue.png') },
         { name: "http://www.muse-ui.org/#/index", src: require('../assets/logo_muse-ui.png') },
-        { name: "githubLogo", src: require('../assets/logo_github.png') }
+        { name: "https://github.com/kessil/exam_assistant", src: require('../assets/logo_github.png') }
       ]
     }
   }

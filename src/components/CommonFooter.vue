@@ -31,6 +31,8 @@ export default {
 <style scoped>
   .content {
     width: 100%;
+    /* height: 3rem;
+    line-height: 3rem; */
     position: fixed;
     bottom: 0;
     left: 0;
