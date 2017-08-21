@@ -2,7 +2,7 @@
   <div class="exercise-content">
     <mu-appbar :title="desc" class="content">
       <!-- <mu-flat-button icon="star" mini @click="starQuestion" slot="right" secondary/> -->
-      <mu-chip backgroundColor="white" slot="right">
+      <mu-chip backgroundColor="white" slot="right" @click="openBottomSheet">
         <mu-avatar :size="32" icon="face" backgroundColor="#a4c639" />
         <span style="color: springgreen;">{{corrects}}</span>
         -
@@ -19,11 +19,26 @@
       <h2>你看不到我</h2>
       <p>抱歉，没有获取到数据</p>
     </div>
+    <mu-bottom-sheet :open="bottomSheet" @close="closeBottomSheet">
+      <mu-list @itemClick="closeBottomSheet">
+        <mu-content-block class="demo-grid" style="max-height: 7rem;">
+          <mu-row gutter>
+            <mu-col width="20" tablet="10" desktop="10" v-for="n in questions.length" :key="n" :style="{backgroundColor: '#eee', borderWidth: '2px', borderColor: questions[n-1].result === ''?'':questions[n-1].result === questions[n-1].answer? 'springgreen' :'red'}"><a @click="flyTo(n)">{{n}}</a></mu-col>
+          </mu-row>
+        </mu-content-block>
+      </mu-list>
+    </mu-bottom-sheet>
     <mu-toast v-if="toast" :message="msg" style="text-align: center;" @close="hideToast" />
-    <div class="fixed-right"><ul>
-      <div><mu-float-button v-if="currpos > 0" mini secondary icon="chevron_left" class="mt-left" @click="prevQuestion" /></div>
-      <div><mu-float-button v-if="currpos < total-1" icon="chevron_right" class="mt-right" @click="nextQuestion" /></div>
-    </ul></div>
+    <div class="fixed-right">
+      <ul>
+        <div>
+          <mu-float-button v-if="currpos > 0" mini secondary icon="chevron_left" class="mt-left" @click="prevQuestion" />
+        </div>
+        <div>
+          <mu-float-button v-if="currpos < total-1" icon="chevron_right" class="mt-right" @click="nextQuestion" />
+        </div>
+      </ul>
+    </div>
   </div>
 </template>
 <script>
@@ -39,6 +54,7 @@ export default {
       mirrorBtn: true,
       toast: false,
       msg: "",
+      bottomSheet: false,
       current: null
     }
   },
@@ -65,11 +81,22 @@ export default {
         this.current = this.questions[this.currpos];
       }
     },
+    flyTo: function(n) {
+      this.currpos = n -1;
+      this.current = this.questions[this.currpos];
+      this.bottomSheet = false;
+    },
     prevQuestion: function () {
       if (this.currpos > 0) {
         this.currpos--;
         this.current = this.questions[this.currpos];
       }
+    },
+    closeBottomSheet() {
+      this.bottomSheet = false
+    },
+    openBottomSheet() {
+      this.bottomSheet = true
     },
     starQuestion: function () {
       var index = this.current.id;
@@ -108,6 +135,10 @@ export default {
   text-align: left;
 }
 
+a {
+  color: #000;
+}
+
 
 /* .content {
     width: 100%;
@@ -123,6 +154,15 @@ export default {
   right: 0.5rem;
   text-align: right;
   opacity: 0.5;
+}
+
+.demo-grid div[class*="col-"] {
+  background: #fff;
+  text-align: center;
+  color: #000;
+  border: 1px solid #ddd;
+  padding: 8px;
+  margin-bottom: 8px;
 }
 
 /* .mt-left {

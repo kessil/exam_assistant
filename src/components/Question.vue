@@ -9,25 +9,25 @@
         <i v-if="question.answer === 'A'" class="fa fa-check-square-o" key="correctA"></i>
         <i v-else class="fa fa-square-o" key="defaultA"></i>
         <span> A. </span>
-        <span v-text="question.A" :class="{wrong: question.result === 'A', correct: question.answer === 'A'}"></span>
+        <span v-text="question.A" :class="{wrong: question.result === 'A' && question.answer !== 'A', correct: question.result === 'A' && question.answer === 'A'}"></span>
       </div>
       <div v-show="question.B">
         <i v-if="question.answer === 'B'" class="fa fa-check-square-o" key="correctB"></i>
         <i v-else class="fa fa-square-o" key="defaultB"></i>
         <span> B. </span>
-        <span v-text="question.B" :class="{wrong: question.result === 'B', correct: question.answer === 'B'}"></span>
+        <span v-text="question.B" :class="{wrong: question.result === 'B' && question.answer !== 'B', correct: question.result === 'B' && question.answer === 'B'}"></span>
       </div>
       <div v-show="question.C">
         <i v-if="question.answer === 'C'" class="fa fa-check-square-o" key="correctC"></i>
         <i v-else class="fa fa-square-o" key="defaultC"></i>
         <span> C. </span>
-        <span v-text="question.C" :class="{wrong: question.result === 'C', correct: question.answer === 'C'}"></span>
+        <span v-text="question.C" :class="{wrong: question.result === 'C' && question.answer !== 'C', correct: question.result === 'C' && question.answer === 'C'}"></span>
       </div>
       <div v-show="question.D">
         <i v-if="question.answer === 'D'" class="fa fa-check-square-o" key="correctD"></i>
         <i v-else class="fa fa-square-o" key="defaultD"></i>
         <span> D. </span>
-        <span v-text="question.D" :class="{wrong: question.result === 'D', correct: question.answer === 'D'}"></span>
+        <span v-text="question.D" :class="{wrong: question.result === 'D' && question.answer !== 'D', correct: question.result === 'D' && question.answer === 'D'}"></span>
       </div>
     </div>
     <!-- <mu-list v-if="mode === 'recite'" class="question-list">

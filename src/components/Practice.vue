@@ -7,7 +7,7 @@
         <mu-menu-item title="立即交卷" :disabled="!testing" @click="handin"/>
         <mu-divider/>
         <mu-menu-item title="重新考试" :disabled="testing" @click="reTry"/>
-        <mu-menu-item title="换份试题" :disabled="testing" @click="reTry"/>
+        <mu-menu-item title="换份试题" :disabled="testing" @click="newTest"/>
       </mu-icon-menu>
     </mu-appbar>
     <div style="height: 2.5rem;"></div>
@@ -43,7 +43,7 @@
       <mu-paper class="demo-paper" :zDepth="3">
         <h2>测试结束，成绩: <span v-if="score>60" style="color: springgreen;">{{score}}</span><span v-else style="color: red;">{{score}}</span></h2>
       </mu-paper>
-      <question v-if="item.result !== item.answer" v-for="item of questions" :question="item" :key="item.id" mode="recite" ><mu-divider/></question>
+      <question v-for="item of questions" :question="item" :key="item.id" mode="recite" ><mu-divider/></question>
     </div>
   </div>
 </template>
@@ -57,6 +57,7 @@ export default {
       testing: true,
       finished: false,
       dialog: true,
+      ques: [],
       questiosn: [],
       current: null,
       totalTime: 3600,
@@ -84,6 +85,7 @@ export default {
     nextQuestion: function() {
       if(this.currpos < this.questions.length - 1) {
         this.current = this.questions[++this.currpos];
+        // console.log(this.current.id);
       } else {
         this.finished = true;
         console.log("最后一题了");
@@ -139,6 +141,23 @@ export default {
       this.score = 0;
       this.testing = true;
     },
+    newTest: function() {
+      this.initTest();
+      this.reTry();
+    },
+    initTest: function() {
+      var ques1 = this.ques.filter(function (q) {
+        return q.type === "单选题";
+      }).sort(function () {
+        return Math.random() - 0.5;
+      }).slice(0, 35);
+      var ques2 = this.ques.filter(function (q) {
+        return q.type === "判断题";
+      }).sort(function () {
+        return Math.random() - 0.5;
+      }).slice(0, 30);
+      this.questions = ques1.concat(ques2);
+    },
     checkResult: function(ans) {
       console.log(ans, "in Practice.vue");
       this.current.result = ans;
@@ -150,17 +169,10 @@ export default {
     }
   },
   created() {
-    var ques0 = JSON.parse(this.userData).sort(function () {
-      return Math.random() - 0.5;
-    });
-    var ques1 = ques0.filter(function (q) {
-      return q.type === "单选题";
-    }).slice(0, 35);
-    var ques2 = ques0.filter(function (q) {
-      return q.type === "判断题";
-    }).slice(0, 30);
-    this.questions = ques1.concat(ques2);
-    console.log("created in Practice.vue");
+    this.ques = JSON.parse(this.userData);
+    this.initTest();
+    console.log("created in Practice.vue")
+    // console.log(this.questions[this.questions.length-1].id);
   }
 }
 </script>
