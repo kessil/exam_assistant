@@ -15,9 +15,10 @@
 
 <script>
 export default {
+  // props: ["bottomNav"],
   data () {
     return {
-      bottomNav: 'category'
+      bottomNav: 'exercise'
     }
   },
   methods: {

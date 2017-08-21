@@ -56,6 +56,7 @@ export default {
     });
     this.total = this.questions.length;
     this.current = this.questions[this.currpos];
+    console.log("created in Exercise.vue");
   },
   methods: {
     nextQuestion: function () {

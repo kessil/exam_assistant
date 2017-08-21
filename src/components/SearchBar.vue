@@ -74,6 +74,6 @@ h2 {
 
 .mtRight {
   opacity: 0.5;
-  z-index:999;
+  /* z-index:999; */
 }
 </style>

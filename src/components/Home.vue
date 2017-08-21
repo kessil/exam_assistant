@@ -7,7 +7,7 @@
     <about-us v-if="activeNav === 'aboutus'"></about-us>
     <stars v-show="activeNav === 'stars'"></stars>
     <div class="foobar"></div>
-    <common-footer v-show="show" @navChange="activeNavChange"></common-footer>
+    <common-footer v-show="show" @navChange="activeNavChange" :bottomNav="activeNav"></common-footer>
   </div>
 </template>
 <script>
@@ -21,7 +21,7 @@ import Stars from "@/components/Stars"
 export default {
   data() {
     return {
-      activeNav: "category",
+      activeNav: "exercise",
       show: true
     }
   },

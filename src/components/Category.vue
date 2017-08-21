@@ -11,11 +11,11 @@
       <question v-for="item of currents" :question="item" mode="recite" :key="item.id"><mu-divider/></question>
       <div v-if="currents.length < afterSort.length"><a @click="loadMore">点我加载更多</a></div>
       <div v-else>已无更多</div>
-      <mu-back-top/>
+      <mu-back-top bottom="56"/>
     </div>
-    <div v-else>
-      <h2>你看不到我</h2>
-      <p>抱歉，没有获取到数据</p>
+    <div v-else class="empty-content">
+      <h2><i class="fa fa-5x fa-heartbeat"></i></h2>
+      <p>没有获取到数据</p>
     </div>
   </div>
 </div>
@@ -70,7 +70,7 @@ export default {
     }
   },
   created() {
-    // console.log(this.questions);
+    console.log("created in Category.vue");
     this.questions = JSON.parse(this.userData);
     this.afterSort = this.questions.filter(function(q){
       return q.type === "单选题";
@@ -86,6 +86,16 @@ export default {
     height: 50px;
     top: 0;
     left: 0;
+  }
+  .empty-content {
+    margin-top: 40%;
+    text-align: center;
+  }
+  .empty-content > h2 {
+    color: #FF4081;
+  }
+  .empty-content > p {
+    opacity: 0.5;
   }
 
 </style>

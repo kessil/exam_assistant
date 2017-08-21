@@ -1,8 +1,14 @@
 <template>
   <div class="practice">
     <mu-appbar :title="remainTime" class="practice-appbar">
-      <mu-flat-button v-if="testing" label="交卷" slot="right" @click="handin" />
-      <mu-flat-button v-else label="重考" slot="right" @click="reTry" />
+      <!-- <mu-flat-button v-if="testing" label="立即交卷" slot="right" @click="handin" />
+      <mu-flat-button v-else label="重考" slot="right" @click="reTry" /> -->
+      <mu-icon-menu icon="more_vert" slot="right">
+        <mu-menu-item title="立即交卷" :disabled="!testing" @click="handin"/>
+        <mu-divider/>
+        <mu-menu-item title="重新考试" :disabled="testing" @click="reTry"/>
+        <mu-menu-item title="换份试题" :disabled="testing" @click="reTry"/>
+      </mu-icon-menu>
     </mu-appbar>
     <div style="height: 2.5rem;"></div>
     <mu-dialog :open="dialog" title="模拟测试">
@@ -25,12 +31,19 @@
       <!-- <mu-flat-button label="取消" slot="actions" primary @click="cancel" /> -->
       <mu-flat-button label="开始测试" slot="actions" primary @click="close" />
     </mu-dialog>
-    <question v-if="testing && current" :question="current" mode="exercise" @childClicked="checkResult"></question>
+
+    <div v-if="testing">
+      <div v-if="finished" class="empty-content">
+        <p>答题结束，不给你检查的机会</p>
+        <mu-raised-button label="我要交卷" @click="handin" secondary/>
+      </div>
+      <question v-if="current && !finished" :question="current" mode="exercise" @childClicked="checkResult"></question>
+    </div>
     <div v-if="!testing">
       <mu-paper class="demo-paper" :zDepth="3">
         <h2>测试结束，成绩: <span v-if="score>60" style="color: springgreen;">{{score}}</span><span v-else style="color: red;">{{score}}</span></h2>
       </mu-paper>
-      <question v-if="item.result !== item.answer" v-for="item of questions" :question="item" :key="item.id" mode="exercise" ><mu-divider/></question>
+      <question v-if="item.result !== item.answer" v-for="item of questions" :question="item" :key="item.id" mode="recite" ><mu-divider/></question>
     </div>
   </div>
 </template>
@@ -42,6 +55,7 @@ export default {
       currpos: 0,
       score: 0,
       testing: true,
+      finished: false,
       dialog: true,
       questiosn: [],
       current: null,
@@ -71,6 +85,7 @@ export default {
       if(this.currpos < this.questions.length - 1) {
         this.current = this.questions[++this.currpos];
       } else {
+        this.finished = true;
         console.log("最后一题了");
       }
     },
@@ -116,6 +131,7 @@ export default {
         q.result = "";
       });
       this.$emit("handin", false);
+      this.finished = false;
       this.currpos = 0;
       this.totalTime = 3600;
       this.interval = setInterval(this.passTime, 1000);
@@ -144,6 +160,7 @@ export default {
       return q.type === "判断题";
     }).slice(0, 30);
     this.questions = ques1.concat(ques2);
+    console.log("created in Practice.vue");
   }
 }
 </script>
@@ -160,4 +177,12 @@ export default {
   margin-top: 1rem;
   margin-left: 10%;
 }
+  .empty-content {
+    margin-top: 40%;
+    text-align: center;
+  }
+    .empty-content > p {
+    opacity: 0.5;
+    margin-bottom: 2rem;
+  }
 </style>
