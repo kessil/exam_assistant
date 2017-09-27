@@ -23,7 +23,7 @@
       <mu-list @itemClick="closeBottomSheet">
         <mu-content-block class="demo-grid" style="max-height: 7rem;">
           <mu-row gutter>
-            <mu-col width="20" tablet="10" desktop="10" v-for="n in questions.length" :key="n" :style="{backgroundColor: '#eee', borderWidth: '2px', borderColor: questions[n-1].result === ''?'':questions[n-1].result === questions[n-1].answer? 'springgreen' :'red'}"><a @click="flyTo(n)">{{n}}</a></mu-col>
+            <mu-col width="20" tablet="10" desktop="10" v-for="n in questions.length" :key="n" :style="{backgroundColor: '#eee', borderWidth: '2px', borderColor: questions[n-1].result === ''?'':questions[n-1].result === questions[n-1].answer? 'springgreen' :'red'}" ><a href="javascript:;" @click="flyTo(n)">{{n}}</a></mu-col>
           </mu-row>
         </mu-content-block>
       </mu-list>
@@ -59,7 +59,7 @@ export default {
     }
   },
   components: {
-    Question
+    Question,
   },
   computed: {
     desc: function () {

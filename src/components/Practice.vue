@@ -3,7 +3,7 @@
     <mu-appbar :title="remainTime" class="practice-appbar">
       <!-- <mu-flat-button v-if="testing" label="立即交卷" slot="right" @click="handin" />
       <mu-flat-button v-else label="重考" slot="right" @click="reTry" /> -->
-      <mu-icon-menu icon="more_vert" slot="right">
+      <mu-icon-menu icon="input" slot="right">
         <mu-menu-item title="立即交卷" :disabled="!testing" @click="handin"/>
         <mu-divider/>
         <mu-menu-item title="重新考试" :disabled="testing" @click="reTry"/>
