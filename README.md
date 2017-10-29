@@ -30,7 +30,7 @@ npm test
 ```
 cd Documents/Projects/exam_assistant
 git add .
-git commit -m 'bilibili'
+git commit -m 'haha'
 git push -u origin master
 
 ```
