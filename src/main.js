@@ -18,6 +18,7 @@ new Vue({
   created() {
     // Vue全局变量userData保存的是json字符串，这样就不会被子组件随意修改造成维护困难
     Vue.prototype.userData = JSON.stringify(require('../static/data.json').questions);
+    console.log(`load data from data.json ${JSON.parse(this.userData).length}`)
     Vue.prototype.myMistakes = [];  // 错题集
     Vue.prototype.myStars = [];     // 收藏簿
   }

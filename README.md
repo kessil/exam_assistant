@@ -30,7 +30,8 @@ npm test
 ```
 cd Documents/Projects/exam_assistant
 git add .
-git git commit -m 'bilibili'
+git commit -m 'bilibili'
 git push -u origin master
+
 ```
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
